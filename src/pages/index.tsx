@@ -1,7 +1,7 @@
 import { LoadingIcon } from '@/components/Icons'
 import useOpenai from '@/hooks/useOpenai'
 import Head from 'next/head'
-import { useRef } from 'react'
+import React, { useRef } from 'react'
 
 function Layout({ children }: any) {
   return (
@@ -63,7 +63,7 @@ export default function Home() {
   const { askGPT, responseAI, hasError, error, loading } = useOpenai()
   const apiKey: any = useRef(null)
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault()
     // The const dataForm is a new instance of the FormData class, which takes in the event target as an argument.
     const dataForm = new FormData(e.target)
