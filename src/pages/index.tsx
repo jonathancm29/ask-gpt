@@ -86,7 +86,7 @@ export default function Home() {
             loading={loading}
             apiKey={apiKey}
           />
-          <p className='mb-12 h-36 overflow-auto text-lg font-bold leading-9 text-gray-900 border-b-2 border-gray-100'>
+          <p className='mb-12 max-h-36 overflow-auto text-lg font-bold leading-9 text-gray-900 border-b-2 border-gray-100'>
             {responseAI}
           </p>
           {hasError && <p className='text-red-500'>{error}</p>}
