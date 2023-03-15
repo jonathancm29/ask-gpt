@@ -8,8 +8,6 @@ const DEFAULT_PARAMS = {
 }
 
 export const query = async (papiKey: string, params = {}) => {
-  console.log(params)
-
   const params_ = { ...DEFAULT_PARAMS, ...params }
   const requestOptions = {
     method: 'POST',
