@@ -1,4 +1,5 @@
 import { LoadingIcon } from '@/components/Icons'
+import { MODELS_OPENAI } from '@/consts/consts'
 import useOpenai from '@/hooks/useOpenai'
 import Head from 'next/head'
 import React, { useRef } from 'react'
@@ -40,6 +41,16 @@ function FormRequestQuestion({ apiKey, loading, handleSubmit }: any) {
       >
         Consigue un API Key Aqui!
       </a>
+
+      <label htmlFor='model-list' className='text-gray-700'>
+        Selecciona un modelo
+      </label>
+      <select name='model' id='model-list' className='block px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm w-52 focus:outline-none focus:ring-primary-500 focus:border-primary-500'>
+        {MODELS_OPENAI.map((model, index) => (
+          <option key={index}>{model}</option>
+        ))}
+      </select>
+
       <label htmlFor='question' className='text-gray-700'>
         Escribe una pregunta
       </label>
@@ -68,11 +79,13 @@ export default function Home() {
     // The const dataForm is a new instance of the FormData class, which takes in the event target as an argument.
     const dataForm = new FormData(e.target)
 
+    const model = dataForm.get('model')
+
     // The const prompt is getting the value of 'prompt' from the dataForm instance.
     const prompt = dataForm.get('prompt')
 
     // The askGPT function is being called with two arguments: apiKey.current.value and prompt.
-    askGPT(apiKey.current.value, prompt?.toString()!)
+    askGPT(apiKey.current.value, { prompt: prompt?.toString()!, model: model?.toString()! })
   }
   return (
     <>
