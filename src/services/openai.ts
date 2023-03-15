@@ -1,6 +1,6 @@
 const DEFAULT_PARAMS = {
   model: 'text-davinci-003',
-  temperature: 0.6,
+  temperature: 0.5,
   max_tokens: 256,
   top_p: 1,
   frequency_penalty: 0,
@@ -8,6 +8,8 @@ const DEFAULT_PARAMS = {
 }
 
 export const query = async (papiKey: string, params = {}) => {
+  console.log(params)
+
   const params_ = { ...DEFAULT_PARAMS, ...params }
   const requestOptions = {
     method: 'POST',

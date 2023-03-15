@@ -7,7 +7,7 @@ const useOpenai = () => {
   const [loading, setLoading] = useState(false)
   const hasError = error.length > 0
 
-  const askGPT = async (apiKey: string, { prompt, model }: {prompt: string, model: string}) => {
+  const askGPT = async (apiKey: string, { prompt, model, temperature }: {prompt: string, model: string, temperature: number}) => {
     setError('')
     setResponseAI('')
 
@@ -22,7 +22,7 @@ const useOpenai = () => {
     }
     try {
       setLoading(true)
-      const res = await query(apiKey, { prompt, model })
+      const res = await query(apiKey, { prompt, model, temperature })
       if (!res.success) {
         setError(res.error)
       }
