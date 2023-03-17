@@ -5,6 +5,8 @@ type Data = {
   name: string
 }
 
+console.log('Hello.ts')
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
