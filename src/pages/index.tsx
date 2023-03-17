@@ -1,11 +1,12 @@
 import Layout from '@/components/Layout'
+import Link from 'next/link'
 
 export default function Home() {
   return (
     <>
       <Layout>
-        <a href='/completation'> Completation</a>
-        <a href='/chat'> Chat </a>
+        <Link href='/completation'> Completation</Link>
+        <Link href='/chat'> Chat </Link>
       </Layout>
     </>
   )
