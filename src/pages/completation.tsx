@@ -25,6 +25,7 @@ export default function Completation() {
       temperature: parseFloat(temperature?.toString()!)
     })
   }
+
   return (
     <>
       <Layout>
