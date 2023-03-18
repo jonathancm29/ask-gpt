@@ -7,9 +7,49 @@ import TextareaQuestion from '@/components/TextareaQuestion'
 import { chat, Message } from '@/services/openai'
 import React, { useEffect, useRef, useState } from 'react'
 
+function ChatMessage({ message }: { message: Message }) {
+  return (
+    <li className='gap-4'>
+      <span className='font-medium'>{`${message.role}: `}</span>
+      <span>{message.content}</span>
+    </li>
+  )
+}
+
+function ChatMessages({
+  messages,
+  loading
+}: {
+  messages: Message[]
+  loading: boolean
+}) {
+  const messagesContainerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    messagesContainerRef.current?.scrollTo(
+      0,
+      messagesContainerRef.current?.scrollHeight
+    )
+  }, [messages])
+
+  return (
+    <div
+      className='h-64 w-full overflow-auto p-4 shadow-md bg-slate-200'
+      ref={messagesContainerRef}
+    >
+      <ul className='flex flex-col gap-3 w-96'>
+        {messages.map((message, index) => (
+          <ChatMessage key={index} message={message} />
+        ))}
+        <Loading show={loading} />
+      </ul>
+    </div>
+  )
+}
+
 export default function Chat() {
-  const apiKey = useRef<HTMLInputElement>(null)
-  const form = useRef<HTMLFormElement>(null)
+  const apiKeyRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const [messages, setMessages] = useState<Message[]>([])
   const [loading, setLoading] = useState(false)
@@ -19,8 +59,8 @@ export default function Chat() {
     setLoading(true)
 
     const formData = new FormData(e.target as HTMLFormElement)
-    const question = formData.get('prompt')?.toString()!
-    const model = formData.get('model')?.toString()!
+    const question = formData.get('prompt')?.toString() || ''
+    const model = formData.get('model')?.toString() || ''
 
     const newUserMessage = {
       role: 'user',
@@ -36,7 +76,7 @@ export default function Chat() {
     const newStateMessages = [...messages, newUserMessage]
     setMessages(newStateMessages)
 
-    const data = await chat(apiKey.current?.value!, {
+    const data = await chat(apiKeyRef.current?.value!, {
       model,
       messages: newStateMessages
     })
@@ -61,16 +101,10 @@ export default function Chat() {
       if (question.value === '' || question.value === '\n') {
         return
       }
-      form.current?.requestSubmit()
+      formRef.current?.requestSubmit()
     }
   }
 
-  useEffect(() => {
-    const messagesContainerElement = document.querySelector(
-      '#messages-container'
-    ) as HTMLTextAreaElement
-    messagesContainerElement.scrollTop = messagesContainerElement.scrollHeight
-  }, [messages])
   return (
     <>
       <Layout>
@@ -80,25 +114,14 @@ export default function Chat() {
         <form
           onSubmit={handleSubmitForm}
           className='flex flex-col gap-2'
-          ref={form}
+          ref={formRef}
         >
-          <InputApIKey apiKey={apiKey} />
+          <InputApIKey apiKey={apiKeyRef} />
 
           <SelectModelInput mode='chat' />
-          <div
-            className='h-64 w-full overflow-auto p-4 shadow-md bg-slate-200'
-            id='messages-container'
-          >
-            <ul className='flex flex-col gap-3 w-96'>
-              {messages.map((message, index) => (
-                <li key={index} className='gap-4'>
-                  <span className='font-medium'>{`${message.role}: `}</span>
-                  <span>{message.content}</span>
-                </li>
-              ))}
-              <Loading show={loading} />
-            </ul>
-          </div>
+
+          <ChatMessages messages={messages} loading={loading} />
+
           <button
             onClick={() => setMessages([])}
             className='text-blue-500 self-end'
