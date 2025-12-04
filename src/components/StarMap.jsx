@@ -56,9 +56,11 @@ const StarMap = ({ locations, connectionLine }) => {
         <Map 
           provider={darkProvider}
           defaultCenter={defaultCenter}
-          defaultZoom={4}
+          defaultZoom={3}
           minZoom={2}
           maxZoom={18}
+          metaWheelZoom={true} // Requires Cmd/Ctrl + Scroll to zoom (prevents accidental zoom)
+          touchEvents={true} // Enables touch gestures
           attribution={false} // Cleaner look
         >
           {/* Connection Line */}
