@@ -4,7 +4,54 @@ import Carousel from './components/Carousel';
 import MusicPlayer from './components/MusicPlayer';
 import WeatherSections from './components/WeatherSections';
 import Login from './components/Login';
+import StarMap from './components/StarMap';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+
+// ------------------------------------------------------------------
+// CONFIGURACIÓN DEL MAPA DE ESTRELLAS
+// ------------------------------------------------------------------
+// Agrega aquí tus lugares especiales.
+// Puedes obtener las coordenadas (lat, lng) en Google Maps.
+const LOCATIONS = [
+  { 
+    id: 'murillo',
+    lat: 4.8741922, 
+    lng: -75.1755788, 
+    title: "El Comienzo, Bendito Murillo, bendita casualidad", 
+    description: "Aquí es donde nuestra historia comenzó a escribirse.", 
+    emoji: "❤️" 
+  },
+  { 
+    id: 'norcasia',
+    lat: 5.5756063, 
+    lng: -74.8906979, 
+    title: "Aventura, (Norcasia)", 
+    description: "Donde las carreteras se hicieron cortas a nuestro lado.", 
+    emoji: "✈️" 
+  },
+  {
+    id: 'cali',
+    lat: 3.4516,
+    lng: -76.5320,
+    title: "Mi Hogar (Cali)",
+    description: "La sucursal del cielo, desde donde te pienso cada día.",
+    emoji: "🕺"
+  },
+  {
+    id: 'manizales',
+    lat: 5.0703,
+    lng: -75.5138,
+    title: "Tu Hogar (Manizales)",
+    description: "La ciudad donde vive mi corazón.",
+    emoji: "🏡"
+  }
+];
+
+const CONNECTION = {
+  from: 'cali',
+  to: 'manizales',
+  label: "260km que no son nada para este amor"
+};
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -71,6 +118,9 @@ function App() {
 
         {/* New Weather Sections */}
         <WeatherSections />
+
+        {/* Star Map Section */}
+        <StarMap locations={LOCATIONS} connectionLine={CONNECTION} />
 
         <section className="w-full min-h-[60vh] flex flex-col items-center justify-center p-4 snap-start">
           <div className="max-w-md w-full bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl">
