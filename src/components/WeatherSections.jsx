@@ -1,11 +1,132 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
+// Import photos
+import imgWinter1 from '../photos/1 (1).jpeg';
+import imgWinter2 from '../photos/1 (3).jpeg';
+import imgSunset1 from '../photos/1 (4).jpeg';
+import imgSummer1 from '../photos/1 (5).jpeg';
+import imgSunset2 from '../photos/1 (7).jpeg';
+import imgSummer2 from '../photos/1 (10).jpeg';
+
 const WeatherSections = () => {
   return (
     <div className="w-full relative z-20">
       <ColdSection />
       <WarmSection />
+      <SunsetSection />
+    </div>
+  );
+};
+
+const SunsetSection = () => {
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "center center"]
+  });
+
+  // Parallax for images
+  const y = useTransform(scrollYProgress, [0, 1], [100, -50]);
+
+  return (
+    <section ref={containerRef} className="relative min-h-screen w-full flex items-center justify-center overflow-hidden py-20">
+      {/* Sunset Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-indigo-900 via-purple-800 to-orange-700 pointer-events-none" />
+      
+      {/* Soft lighting overlay */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(255,200,100,0.2),transparent_50%)] pointer-events-none" />
+      
+      {/* Floating Particles/Fireflies Effect */}
+      <FirefliesEffect />
+
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          
+          {/* Text Content */}
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center md:text-left space-y-6"
+          >
+            <h2 className="text-5xl md:text-7xl font-['Great_Vibes'] text-rose-100 drop-shadow-[0_0_15px_rgba(255,100,100,0.5)]">
+              Atardeceres Mágicos
+            </h2>
+            <p className="text-lg md:text-xl text-rose-100/90 font-light leading-relaxed font-['Inter']">
+              "Cuando el sol se despide y el cielo se pinta de colores imposibles, el tiempo parece detenerse. En ese instante dorado, donde el día abraza a la noche, encuentro en tu mirada el reflejo de mil atardeceres, prometiéndonos que mañana, el sol volverá a brillar aún más fuerte para nosotros."
+            </p>
+            <div className="w-24 h-1 bg-rose-400/50 mx-auto md:mx-0 rounded-full" />
+          </motion.div>
+
+          {/* Photos */}
+          <div className="grid grid-cols-2 gap-4 rotate-2 hover:rotate-0 transition-transform duration-500">
+            <motion.div 
+              style={{ y }}
+              className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl group"
+            >
+              <img 
+                src={imgSunset1}
+                alt="Pareja contemplando el atardecer" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-colors" />
+            </motion.div>
+            
+            <motion.div 
+              style={{ y: useTransform(scrollYProgress, [0, 1], [-50, 50]) }}
+              className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl translate-y-12 group"
+            >
+              <img 
+                src={imgSunset2}
+                alt="Momento romántico bajo la luz dorada" 
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-purple-900/20 group-hover:bg-transparent transition-colors" />
+            </motion.div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const FirefliesEffect = () => {
+  const fireflies = Array.from({ length: 30 }).map((_, i) => ({
+    id: i,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    duration: Math.random() * 4 + 3,
+    delay: Math.random() * 2,
+    moveX: Math.random() * 40 - 20,
+    moveY: Math.random() * 40 - 20
+  }));
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {fireflies.map((fly) => (
+        <motion.div
+          key={fly.id}
+          className="absolute w-1 h-1 bg-yellow-200 rounded-full blur-[1px]"
+          style={{
+            left: `${fly.left}%`,
+            top: `${fly.top}%`,
+          }}
+          animate={{
+            opacity: [0, 0.8, 0],
+            x: [0, fly.moveX],
+            y: [0, fly.moveY],
+          }}
+          transition={{
+            duration: fly.duration,
+            repeat: Infinity,
+            delay: fly.delay,
+            ease: "easeInOut"
+          }}
+        />
+      ))}
     </div>
   );
 };
@@ -52,7 +173,7 @@ const ColdSection = () => {
               className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl group"
             >
               <img 
-                src="https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee?q=80&w=600&auto=format&fit=crop" 
+                src={imgWinter1}
                 alt="Pareja en la nieve" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -64,7 +185,7 @@ const ColdSection = () => {
               className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-white/10 shadow-2xl translate-y-12 group"
             >
               <img 
-                src="https://images.unsplash.com/photo-1483069757716-1975d63f642d?q=80&w=600&auto=format&fit=crop" 
+                src={imgWinter2}
                 alt="Abrazo en invierno" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -116,7 +237,7 @@ const WarmSection = () => {
               className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-orange-100/20 shadow-2xl group"
             >
               <img 
-                src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=600&auto=format&fit=crop" 
+                src={imgSummer1}
                 alt="Pareja en verano" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -130,7 +251,7 @@ const WarmSection = () => {
               className="relative aspect-[3/4] rounded-2xl overflow-hidden border-4 border-orange-100/20 shadow-2xl translate-y-12 group"
             >
               <img 
-                src="https://images.unsplash.com/photo-1613539246066-78db6ec4ff0f?q=80&w=600&auto=format&fit=crop" 
+                src={imgSummer2}
                 alt="Playa y amor" 
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />

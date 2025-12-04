@@ -36,7 +36,7 @@ const MusicPlayer = () => {
         {/* Embed Container */}
         <div className="relative w-full aspect-video bg-black">
           <iframe 
-            src={`https://www.youtube.com/embed/videoseries?list=${PLAYLIST_ID}&rel=0&modestbranding=1`}
+            src={`https://www.youtube.com/embed/videoseries?list=${PLAYLIST_ID}&rel=0&modestbranding=1&autoplay=1&enablejsapi=1`}
             title="YouTube Playlist Player"
             className="absolute inset-0 w-full h-full"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

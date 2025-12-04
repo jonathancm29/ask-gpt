@@ -2,13 +2,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 
-const images = [
-  "https://images.unsplash.com/photo-1516589178581-a8faaf695ce6?q=80&w=800&auto=format&fit=crop", // Couple holding hands
-  "https://images.unsplash.com/photo-1529619768328-e37af76c6fe5?q=80&w=800&auto=format&fit=crop", // City night
-  "https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=800&auto=format&fit=crop", // Park bench
-  "https://images.unsplash.com/photo-1621621667797-e06afc210af0?q=80&w=800&auto=format&fit=crop", // Coffee date
-  "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=800&auto=format&fit=crop"  // Silhouette
-];
+const photosImport = import.meta.glob('../photos/*.jpeg', { eager: true, import: 'default' });
+const images = Object.values(photosImport);
 
 const variants = {
   enter: (direction) => ({
@@ -97,11 +92,11 @@ const Carousel = () => {
         </button>
 
         {/* Indicators */}
-        <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-10">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10 max-w-[90%] overflow-x-auto no-scrollbar px-2">
           {images.map((_, idx) => (
             <div 
               key={idx}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${idx === imageIndex ? 'bg-white w-4' : 'bg-white/40'}`}
+              className={`flex-shrink-0 w-2 h-2 rounded-full transition-all duration-300 ${idx === imageIndex ? 'bg-white w-4' : 'bg-white/40'}`}
             />
           ))}
         </div>
