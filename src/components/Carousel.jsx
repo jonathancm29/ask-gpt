@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-react';
 
 const photosImport = import.meta.glob('../photos/*.jpeg', { eager: true, import: 'default' });
-const images = Object.values(photosImport);
+const initialImages = Object.values(photosImport);
 
 const variants = {
   enter: (direction) => ({
@@ -26,6 +26,11 @@ const variants = {
 };
 
 const Carousel = () => {
+  // Randomize images on component mount
+  const [images] = useState(() => {
+    return [...initialImages].sort(() => Math.random() - 0.5);
+  });
+
   const [[page, direction], setPage] = useState([0, 0]);
   const [isZoomed, setIsZoomed] = useState(false);
 
