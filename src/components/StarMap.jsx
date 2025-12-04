@@ -56,7 +56,7 @@ const StarMap = ({ locations, connectionLine }) => {
         <Map 
           provider={darkProvider}
           defaultCenter={defaultCenter}
-          defaultZoom={3}
+          defaultZoom={10}
           minZoom={2}
           maxZoom={18}
           metaWheelZoom={true} // Requires Cmd/Ctrl + Scroll to zoom (prevents accidental zoom)
