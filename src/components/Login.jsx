@@ -15,8 +15,9 @@ const Login = ({ onLoginSuccess }) => {
   const inputRefs = useRef([]);
 
   const handleChange = (e, index) => {
-    const value = e.target.value.toUpperCase();
+    const value = e.target.value;
     if (value.length > 1) return; // Only allow 1 char
+    if (!/^\d*$/.test(value)) return; // Only allow digits
 
     const newPassword = [...password];
     newPassword[index] = value;
@@ -112,14 +113,15 @@ const Login = ({ onLoginSuccess }) => {
                     onChange={(e) => handleChange(e, index)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
                     style={{ WebkitTextSecurity: 'disc' }} // Hides text like password dots
-                    inputMode="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
                     autoComplete="off"
                   />
                 ))}
               </div>
 
               <p className="text-white/30 text-sm">
-                Ingresa la palabra secreta
+                Ingresa la clave secreta
               </p>
             </motion.div>
           </motion.div>
