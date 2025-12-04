@@ -20,7 +20,7 @@ To install and run the application, follow these steps:
 ## Make with:
 NextJS and Tailwind
 TypeScript
-
+testing....
 
 ### Form with two fields, You must send the apikey and prompt question, then a request will be created
 
