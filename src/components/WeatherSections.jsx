@@ -52,10 +52,10 @@ const SunsetSection = () => {
             className="text-center md:text-left space-y-6"
           >
             <h2 className="text-5xl md:text-7xl font-['Great_Vibes'] text-rose-100 drop-shadow-[0_0_15px_rgba(255,100,100,0.5)]">
-              Atardeceres Mágicos
+              Atardeceres de Novela
             </h2>
             <p className="text-lg md:text-xl text-rose-100/90 font-light leading-relaxed font-['Inter']">
-              "Cuando el sol se despide y el cielo se pinta de colores imposibles, el tiempo parece detenerse. En ese instante dorado, donde el día abraza a la noche, encuentro en tu mirada el reflejo de mil atardeceres, prometiéndonos que mañana, el sol volverá a brillar aún más fuerte para nosotros."
+              "Cuando el sol se despide y el cielo se pinta de colores imposibles, el tiempo parece detenerse. En ese instante dorado, donde el día abraza a la noche, encuentro en tu mirada el reflejo de mil páginas por escribir, prometiéndonos que mañana, el sol volverá a brillar aún más fuerte para nosotros."
             </p>
             <div className="w-24 h-1 bg-rose-400/50 mx-auto md:mx-0 rounded-full" />
           </motion.div>
@@ -158,10 +158,10 @@ const ColdSection = () => {
             className="text-center md:text-left space-y-6"
           >
             <h2 className="text-5xl md:text-7xl font-['Great_Vibes'] text-blue-100 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
-              Juntos en el Frío
+              Bailando en el Invierno
             </h2>
             <p className="text-lg md:text-xl text-blue-200 font-light leading-relaxed font-['Inter']">
-              "Aunque el viento sople fuerte y la nieve cubra nuestros pasos, tu abrazo es el refugio eterno donde siempre encuentro calor. En cada invierno, nuestro amor florece más fuerte."
+              "Aunque el viento sople fuerte y la nieve cubra nuestros pasos, tu abrazo es el refugio donde la lluvia no nos alcanza. En cada invierno, nuestro baile continúa más fuerte."
             </p>
             <div className="w-24 h-1 bg-blue-400/30 mx-auto md:mx-0 rounded-full" />
           </motion.div>
@@ -268,10 +268,10 @@ const WarmSection = () => {
             className="text-center md:text-right space-y-6 order-1 md:order-2"
           >
             <h2 className="text-5xl md:text-7xl font-['Great_Vibes'] text-orange-100 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]">
-              Bajo el Sol Radiante
+              Un Verano de Cuento
             </h2>
             <p className="text-lg md:text-xl text-orange-100/90 font-light leading-relaxed font-['Inter']">
-              "Como el amanecer ilumina el mundo, tú iluminas mis días. En cada rayo de sol, en cada brisa cálida, celebro la alegría de compartir este viaje bajo cualquier cielo."
+              "Como el amanecer ilumina el mundo, tú iluminas mis días. En cada rayo de sol, en cada brisa cálida, celebro la alegría de no parar de bailar bajo este cielo."
             </p>
             <div className="w-24 h-1 bg-orange-400/50 mx-auto md:ml-auto md:mr-0 rounded-full" />
           </motion.div>

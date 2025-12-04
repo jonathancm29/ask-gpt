@@ -97,7 +97,7 @@ const Login = ({ onLoginSuccess }) => {
               </div>
               
               <h2 className="text-2xl font-light text-white mb-8 font-['Great_Vibes'] tracking-widest text-4xl">
-                ¿Cuál es la clave de nuestro amor?
+                ¿Cuál es la clave para abrir este capítulo?
               </h2>
 
               <div className="flex justify-center gap-3 mb-8">
@@ -150,7 +150,7 @@ const Login = ({ onLoginSuccess }) => {
               transition={{ delay: 1, duration: 0.8 }}
               className="mt-8 text-4xl md:text-6xl text-white font-['Great_Vibes'] drop-shadow-lg"
             >
-              ¡Bienvenida mi amor!
+              ¡Que empiece el baile!
             </motion.h2>
           </motion.div>
         )}

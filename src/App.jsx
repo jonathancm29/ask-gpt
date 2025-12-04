@@ -49,10 +49,10 @@ function App() {
               className="text-center mb-8"
             >
             <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 drop-shadow-lg font-serif">
-              Nuestra Historia
+              No pares de bailar hasta que llueva
             </h1>
             <p className="text-blue-200 text-lg font-light tracking-wide">
-              Cada momento contigo es eterno
+              El capítulo digital de nuestra historia
             </p>
           </motion.div>
           
@@ -74,14 +74,15 @@ function App() {
 
         <section className="w-full min-h-[60vh] flex flex-col items-center justify-center p-4 snap-start">
           <div className="max-w-md w-full bg-black/30 backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl">
-            <h2 className="text-2xl font-semibold text-white mb-4 text-center">Nuestra Playlist</h2>
+            <h2 className="text-2xl font-semibold text-white mb-4 text-center">La banda sonora de nuestro libro</h2>
             <MusicPlayer />
           </div>
         </section>
         
-        <footer className="w-full py-8 text-center text-white/40 text-sm">
-          <p>Hecho con ❤️ para ti</p>
+        <footer className="w-full py-8 text-center text-white/40 text-sm flex flex-col items-center gap-4">
+          <p>Escrito en código y papel con 🤍 para ti</p>
         </footer>
+
       </main>
       </motion.div>
     </AnimatePresence>
