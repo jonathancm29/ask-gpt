@@ -29,6 +29,37 @@ const StarMap = ({ locations, connectionLine }) => {
     )
     : null;
 
+  // Helper to convert lat/lng to pixel coordinates (Pigeon Maps doesn't expose this easily in children without a custom component)
+  // So we will use a simple SVG overlay approach assuming linear interpolation is "good enough" for short distances or just use a specialized Line component if we were using a heavier library.
+  // BUT, Pigeon Maps `Overlay` passes `left` and `top` props to its children if we were to use a custom component, but here we are using standard Overlay.
+  //
+  // ACTUALLY, the best way in Pigeon Maps to draw a line is to create a custom component that receives mapState.
+  // However, to keep it simple within this file, we can use a full-canvas SVG overlay that sits on top of the map.
+  // But that requires access to latLngToPixel which is only available inside the Map context.
+  
+  // Let's try a simpler visual hack: A series of dots (dashes) between the two points?
+  // Or better: Let's implement a custom "MapLine" component inside StarMap.
+
+  const MapLine = ({ mapState, latLngToPixel, from, to }) => {
+    if (!from || !to || !latLngToPixel) return null;
+
+    const [x1, y1] = latLngToPixel([from.lat, from.lng]);
+    const [x2, y2] = latLngToPixel([to.lat, to.lng]);
+
+    return (
+      <svg className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible" style={{ zIndex: 1 }}>
+        <line 
+          x1={x1} y1={y1} 
+          x2={x2} y2={y2} 
+          stroke="#ec4899" 
+          strokeWidth="2" 
+          strokeDasharray="5,5"
+          className="animate-pulse"
+        />
+      </svg>
+    );
+  };
+
   return (
     <section className="relative w-full py-20 overflow-hidden flex flex-col items-center justify-center">
       {/* Section Title */}
@@ -56,62 +87,13 @@ const StarMap = ({ locations, connectionLine }) => {
         <Map 
           provider={darkProvider}
           defaultCenter={defaultCenter}
-          defaultZoom={10}
+          defaultZoom={7}
           minZoom={2}
           maxZoom={18}
           metaWheelZoom={true} // Requires Cmd/Ctrl + Scroll to zoom (prevents accidental zoom)
           touchEvents={true} // Enables touch gestures
           attribution={false} // Cleaner look
         >
-          {/* Connection Line */}
-          {connectionLine && connectionLine.from && connectionLine.to && (() => {
-            const fromLoc = locations.find(l => l.id === connectionLine.from);
-            const toLoc = locations.find(l => l.id === connectionLine.to);
-            
-            if (fromLoc && toLoc) {
-              return (
-                <>
-                  {/* SVG Line Overlay */}
-                  <Overlay anchor={fromLoc} offset={[0, 0]}>
-                     {/* This is tricky in Pigeon Maps as Overlay is a single point. 
-                         However, we can draw a line if we know the pixel coordinates, 
-                         but Pigeon Maps doesn't expose projection easily in children.
-                         
-                         Alternative: Use a simplified approach or a dedicated line component if available.
-                         Since Pigeon Maps is simple, we might need a hack or just place the midpoint label.
-                         
-                         Wait! Pigeon Maps DOES support SVG overlays if we handle coordinates.
-                         BUT for simplicity in this "pair programming" context, let's use a visual approximation 
-                         or just the label if drawing a true geographic line is complex without extra deps.
-                         
-                         ACTUALLY, let's try to render a simple SVG line by using the map context if possible,
-                         or just render the label.
-                         
-                         Let's stick to just the label for now to be safe, OR use a library feature if I recall correctly...
-                         Pigeon Maps doesn't have built-in Polyline. 
-                         
-                         Let's just add the "Distance Label" at the midpoint for now as requested ("dedicación sobre la distancia").
-                      */}
-                  </Overlay>
-                  
-                  {/* Distance Label at Midpoint */}
-                  {midPoint && (
-                    <Overlay anchor={midPoint} offset={[0, 0]}>
-                      <motion.div 
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="bg-slate-900/80 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full text-xs text-blue-200 whitespace-nowrap flex items-center gap-2 shadow-xl z-0"
-                      >
-                        <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
-                        {connectionLine.label}
-                      </motion.div>
-                    </Overlay>
-                  )}
-                </>
-              );
-            }
-          })()}
 
           {locations.map((loc, index) => (
             <Overlay key={index} anchor={[loc.lat, loc.lng]} offset={[0, 0]}>
@@ -162,6 +144,46 @@ const StarMap = ({ locations, connectionLine }) => {
                 </AnimatePresence>
              </Overlay>
           ))}
+
+          {/* Connection Line Geometry */}
+          {connectionLine && connectionLine.from && connectionLine.to && (() => {
+            const fromLoc = locations.find(l => l.id === connectionLine.from);
+            const toLoc = locations.find(l => l.id === connectionLine.to);
+            
+            if (fromLoc && toLoc) {
+               // We inject the custom component as a child of Map. 
+               // Pigeon Maps automatically injects `latLngToPixel` and `pixelToLatLng` props to direct children.
+               return <MapLine from={fromLoc} to={toLoc} />;
+            }
+            return null;
+          })()}
+
+          {/* Connection Label */}
+          {connectionLine && connectionLine.from && connectionLine.to && (() => {
+            const fromLoc = locations.find(l => l.id === connectionLine.from);
+            const toLoc = locations.find(l => l.id === connectionLine.to);
+            
+            if (fromLoc && toLoc) {
+              return (
+                <>
+                  {/* Distance Label at Midpoint */}
+                  {midPoint && (
+                    <Overlay anchor={midPoint} offset={[0, 0]}>
+                      <motion.div 
+                        initial={{ opacity: 0, scale: 0 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.5 }}
+                        className="bg-slate-900/80 backdrop-blur-sm border border-white/20 px-3 py-1 rounded-full text-xs text-blue-200 whitespace-nowrap flex items-center gap-2 shadow-xl z-0"
+                      >
+                        <span className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
+                        {connectionLine.label}
+                      </motion.div>
+                    </Overlay>
+                  )}
+                </>
+              );
+            }
+          })()}
         </Map>
 
         {/* Overlay Gradient for better integration */}

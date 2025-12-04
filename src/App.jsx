@@ -17,23 +17,23 @@ const LOCATIONS = [
     id: 'murillo',
     lat: 4.8741922, 
     lng: -75.1755788, 
-    title: "El Comienzo, Bendito Murillo, bendita casualidad", 
+    title: "El Comienzo, bendito Murillo, bendita casualidad 🤍", 
     description: "Aquí es donde nuestra historia comenzó a escribirse.", 
-    emoji: "❤️" 
+    emoji: "🤍" 
   },
   { 
     id: 'norcasia',
     lat: 5.5756063, 
     lng: -74.8906979, 
-    title: "Aventura, (Norcasia)", 
+    title: "Aventura 🏍️ (Norcasia)", 
     description: "Donde las carreteras se hicieron cortas a nuestro lado.", 
-    emoji: "✈️" 
+    emoji: "🛣️" 
   },
   {
     id: 'cali',
     lat: 3.4516,
     lng: -76.5320,
-    title: "Mi Hogar (Cali)",
+    title: "Mi Hogar 🏡 (Cali)",
     description: "La sucursal del cielo, desde donde te pienso cada día.",
     emoji: "🕺"
   },
@@ -41,9 +41,9 @@ const LOCATIONS = [
     id: 'manizales',
     lat: 5.0703,
     lng: -75.5138,
-    title: "Tu Hogar (Manizales)",
+    title: "Tu Hogar 🏡 (Manizales)",
     description: "La ciudad donde vive mi corazón.",
-    emoji: "🏡"
+    emoji: "👸🏻"
   }
 ];
 
